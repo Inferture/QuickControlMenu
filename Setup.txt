@@ -1,7 +1,7 @@
 //Setup\\
 0)Extraire Custom Controls
 1)Ajouter InputManager.asset dans ProjectsSettings (remplacer l'ancien)
-2)Mettre Dossier CustomControls dans Assets
+2)Mettre Dossier QuickControlMenu dans Assets (bien veiller à ce qu'il s'appelle "QuickControlMenu")
 3)Créer une scène (ex: Intro) pour le menu principal
 4)Aller dans Prefab et glisser les 2 prefabs dans la scène
 5)Window -> QuickControlMenu -> Keymapping --> Ajouter des actions

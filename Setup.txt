@@ -1,0 +1,44 @@
+//Setup\\
+0)Extraire Custom Controls
+1)Ajouter InputManager.asset dans ProjectsSettings (remplacer l'ancien)
+2)Mettre Dossier CustomControls dans Assets
+3)Créer une scène (ex: Intro) pour le menu principal
+4)Aller dans Prefab et glisser les 2 prefabs dans la scène
+5)Window -> QuickControlMenu -> Keymapping --> Ajouter des actions
+
+//Utiliser\\
+
+//Tester si une action est effectuée
+6) 
+-Tester si une action est effectuée: QuickControlMenu.Controls.GetActionDown(*id de l'action*) (équivalent de Input.GetKeyDown(), si le bouton a été pressé ou non)
+-Tester si une action est en train d'être effectuée: QuickControlMenu.Controls.GetAction(*id de l'action*) (équivalent de Input.GetKey(), si le bouton est en train
+d'être pressé ou non)
+-Tester la valeur d'un axe: QuickControlMenu.Controls.GetActionAxisValue(*id de l'action*); 
+// renvoie 0 si l'action ne contient pas d'input d'axe (joystick, gachettes, molette...) équivalent de Input.GetAxis();
+-Tester la valeur d'une action correspondant à un axe ou un bouton: 
+QuickControlMenu.Controls.GetActionAxisOrButtonValue(string id, float buttonActiveValue=1, float buttonInactiveValue=0); 
+Renvoie la valeur de l'axe correspondant à l'action s'il est pressé,
+buttonActiveValue (1 si non précisé) si un bouton correspondant à l'action est pressé, 
+ou buttonInactiveValue (0 si non précisé) si rien n'est pressé.
+
+Exemple: Action id: Jump
+
+Soit, vous vous souvenez de l'id, et vous le mettez en chaîne de caractère (QuickControlMenu.Controls.GetAction("Jump"))
+Soit, vous utilisez QuickControlMenu.Controls.GetAction(QuickControlMenu.KeyStrings.key_Jump); --> avec de l'autocomplétion du coup normalement
+
+
+Action id: Horizontal
+
+(Note: using QuickControlMenu; permet de ne pas avoir à répéter QuickControlMenu. à chaque fois)
+exemple:
+using QuickControlMenu;
+(...)
+if(Controls.GetAction(KeyStrings.key_Jump))
+	//Jumps
+
+
+//Choisir la scène à charger quand on appuie sur Play
+7)Changer le nom de la scène dans l'objet Menu/MainMenu/Play: script 'Option Room', attribut scene en le nom de la scène désirée (ex: SampleScene) pour la charger au moment du choix "Play"
+
+//Changer couleur surlignage
+8)Changer couleur surlignage: modifier l'image Sprites/selected.png

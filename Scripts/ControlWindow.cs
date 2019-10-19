@@ -739,6 +739,7 @@ namespace QuickControlMenu
             TextWriter writer = new StreamWriter(Path.Combine(Application.dataPath, "QuickControlMenu/GeneratedScripts/KeyStrings.cs"));
             writer.Write(GenerateKeyStrings());
             writer.Close();
+            AssetDatabase.Refresh();
         }
         //[WrapperlessIcall]
         /* [MethodImpl(MethodImplOptions.InternalCall)]

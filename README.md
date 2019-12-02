@@ -5,5 +5,4 @@ The instructions are in the setup.txt file.
 Use to obtain a menu system like the one in this game (minus the choose level Option) https://inferture.itch.io/yet-another-shmup
 
 
-  Currently supports Keyboard and Mouse inputs as well as one Joystick (buttons and axis). 
-Support for other joysticks should be coming very soon.
+Currently supports Keyboard and Mouse inputs as well as up to 16 Joysticks (untested with more than 3 though :/ ).

@@ -14,7 +14,6 @@ namespace QuickControlMenu
         public string instructions;
         public GameObject titre;
         public float distanceTitre = 30;
-        bool changedThisFrame = false;
 
         // Use this for initialization
         void Start()
@@ -28,14 +27,13 @@ namespace QuickControlMenu
         // Update is called once per frame
         void Update()
         {
-            changedThisFrame = false;
             Vector2 pos = transform.position;
 
             if (titre != null)
             {
                 titre.transform.position = new Vector2(pos.x, pos.y + distanceTitre);
             }
-            if (enabled)
+            if (isEnabled)
             {
                 GetComponent<Text>().color = new Color(enabledColor.r, enabledColor.g, enabledColor.b, GetComponent<Text>().color.a);
             }
@@ -57,7 +55,6 @@ namespace QuickControlMenu
                         Controls.LoadControls();
                         selected = false;
                         Informations.SetInfo(instructions);
-                        changedThisFrame = true;
                     }
                 }
             }

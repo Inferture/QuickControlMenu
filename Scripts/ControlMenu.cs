@@ -30,7 +30,7 @@ namespace QuickControlMenu
 
         public void OnEnable()
         {
-            Initialisation.Start();
+            Initialisation.Init();
             actions = Controls.actions;
             foreach (Action a in actions)
             {
@@ -38,7 +38,7 @@ namespace QuickControlMenu
                 {
                     actionByCategory[a.category.name].Add(a);
                 }
-                catch (KeyNotFoundException e)
+                catch (KeyNotFoundException)
                 {
                     List<Action> l = new List<Action> { a };
                     actionByCategory.Add(a.category.name, l);
@@ -73,7 +73,7 @@ namespace QuickControlMenu
 
                 if (selected.transform.parent == null)
                 {
-                    selected.transform.parent = catMenu.transform;
+                    selected.transform.SetParent( catMenu.transform);
                     selected.transform.localPosition = Vector2.zero;
                 }
             }
@@ -158,7 +158,7 @@ namespace QuickControlMenu
                 menuAction.transform.SetParent(m.transform);
 
                 GameObject title = menuAction.GetComponent<OptionAction>().title;
-                title.transform.parent = menuAction.transform.parent;
+                title.transform.SetParent(menuAction.transform.parent);
                 title.transform.localPosition = new Vector2(menuAction.transform.localPosition.x, 50);
             }
 
@@ -185,7 +185,7 @@ namespace QuickControlMenu
             //Option
             Option opt = m.AddComponent<Option>();
             opt.information = l[0].category.description;
-            opt.enabled = true;
+            opt.isEnabled = true;
             opt.disabledColor = new Color(0.5f, 0.5f, 0.5f);
             opt.enabledColor = new Color(1, 1, 1);
             opt.menu = menu;

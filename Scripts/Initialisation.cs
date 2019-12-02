@@ -8,7 +8,8 @@ namespace QuickControlMenu
     {
         public static bool initialized = false;
         // Use this for initialization
-        public static void Start()
+        [RuntimeInitializeOnLoadMethod()]
+        public static void Init()
         {
             if (!initialized)
             {

@@ -16,72 +16,120 @@ namespace QuickControlMenu
         Button,
         Axis
     }
+    
+    public enum AxisDevice
+    {
+        Mouse,
+        AllJoysticks,
+        Joystick1,
+        Joystick2,
+        Joystick3,
+        Joystick4,
+        Joystick5,
+        Joystick6,
+        Joystick7,
+        Joystick8,
+        Joystick9,
+        Joystick10,
+        Joystick11,
+        Joystick12,
+        Joystick13,
+        Joystick14,
+        Joystick15,
+        Joystick16
+    }
+    public enum ButtonDevice
+    {
+        AllJoysticks,
+        Joystick1,
+        Joystick2,
+        Joystick3,
+        Joystick4,
+        Joystick5,
+        Joystick6,
+        Joystick7,
+        Joystick8,
+        Joystick9,
+        Joystick10,
+        Joystick11,
+        Joystick12,
+        Joystick13,
+        Joystick14,
+        Joystick15,
+        Joystick16
+    }
+
     public enum JoystickButton
     {
-        Joystick1Button0,
-        Joystick1Button1,
-        Joystick1Button2,
-        Joystick1Button3,
-        Joystick1Button4,
-        Joystick1Button5,
-        Joystick1Button6,
-        Joystick1Button7,
-        Joystick1Button8,
-        Joystick1Button9,
-        Joystick1Button10,
-        Joystick1Button11,
-        Joystick1Button12,
-        Joystick1Button13,
-        Joystick1Button14,
-        Joystick1Button15,
-        Joystick1Button16,
-        Joystick1Button17,
-        Joystick1Button18,
-        Joystick1Button19,
-        Joystick1Button20,
-        Joystick1Button21,
-        Joystick1Button22,
-        Joystick1Button23,
-        Joystick1Button24,
-        Joystick1Button25,
-        Joystick1Button26,
-        Joystick1Button27,
-        Joystick1Button28,
+        Button0,
+        Button1,
+        Button2,
+        Button3,
+        Button4,
+        Button5,
+        Button6,
+        Button7,
+        Button8,
+        Button9,
+        Button10,
+        Button11,
+        Button12,
+        Button13,
+        Button14,
+        Button15,
+        Button16,
+        Button17,
+        Button18,
+        Button19,
+        Button20,
+        Button21,
+        Button22,
+        Button23,
+        Button24,
+        Button25,
+        Button26,
+        Button27,
+        Button28
     }
-    public enum Axis
+
+    public enum MouseAxis
     {
-        AxisXJoystick1,
-        AxisYJoystick1,
-        Axis3Joystick1,
-        Axis4Joystick1,
-        Axis5Joystick1,
-        Axis6Joystick1,
-        Axis7Joystick1,
-        Axis8Joystick1,
-        Axis9Joystick1,
-        Axis10Joystick1,
-        Axis11Joystick1,
-        Axis12Joystick1,
-        Axis13Joystick1,
-        Axis14Joystick1,
-        Axis15Joystick1,
-        Axis16Joystick1,
-        Axis17Joystick1,
-        Axis18Joystick1,
-        Axis19Joystick1,
-        Axis20Joystick1,
-        Axis21Joystick1,
-        Axis22Joystick1,
-        Axis23Joystick1,
-        Axis24Joystick1,
-        Axis25Joystick1,
-        Axis26Joystick1,
-        Axis27Joystick1,
-        Axis28Joystick1,
         MouseScrollwheelUp,
         MouseScrollwheelDown,
     }
+    public enum JoystickAxis
+    {
+        AxisX,
+        AxisY,
+        Axis3,
+        Axis4,
+        Axis5,
+        Axis6,
+        Axis7,
+        Axis8,
+        Axis9,
+        Axis10,
+        Axis11,
+        Axis12,
+        Axis13,
+        Axis14,
+        Axis15,
+        Axis16,
+        Axis17,
+        Axis18,
+        Axis19,
+        Axis20,
+        Axis21,
+        Axis22,
+        Axis23,
+        Axis24,
+        Axis25,
+        Axis26,
+        Axis27,
+        Axis28,
+    }
 
+    
 
 
     [Serializable]
@@ -294,8 +342,6 @@ namespace QuickControlMenu
                                 {
                                     for (int j = 0; j < categories[i].actions.Count; j++)
                                     {
-
-
                                         Action a = categories[i].actions[j];
 
                                         EditorGUILayout.LabelField(a.name, EditorStyles.boldLabel);
@@ -364,30 +410,6 @@ namespace QuickControlMenu
                                                                 waitingCategory = -1;
                                                                 waitingKeynumber = -1;
                                                             }
-                                                            if (a.keyAble)
-                                                            {
-                                                                foreach (KeyCode v in Enum.GetValues(typeof(KeyCode)))
-                                                                {
-                                                                    if (Input.GetKeyDown(v) && !(Input.GetKey(KeyCode.Escape) || Input.GetKey(KeyCode.Return)))
-                                                                    {
-                                                                        a.keys[k] = new ActionKey(a.keys[k].inputType, v.ToString());
-                                                                        waitingAction = -1;
-                                                                        waitingCategory = -1;
-                                                                        waitingKeynumber = -1;
-                                                                    }
-                                                                }
-                                                            }
-                                                            if (a.axisAble)
-                                                            {
-                                                                string axis = Controls.GetAxis();
-                                                                if (axis != null)
-                                                                {
-                                                                    a.keys[k] = new ActionKey(a.keys[k].inputType, axis);
-                                                                    waitingAction = -1;
-                                                                    waitingCategory = -1;
-                                                                    waitingKeynumber = -1;
-                                                                }
-                                                            }
 
                                                             Event e = Event.current;
                                                             if (e.type == EventType.KeyDown)
@@ -399,27 +421,11 @@ namespace QuickControlMenu
                                                             }
                                                             if (e.type == EventType.MouseDown)
                                                             {
-                                                                if (e.button == 0)
-                                                                {
-                                                                    a.keys[k] = new ActionKey(a.keys[k].inputType, "Mouse0");
-                                                                    waitingAction = -1;
-                                                                    waitingCategory = -1;
-                                                                    waitingKeynumber = -1;
-                                                                }
-                                                                if (e.button == 1)
-                                                                {
-                                                                    a.keys[k] = new ActionKey(a.keys[k].inputType, "Mouse1");
-                                                                    waitingAction = -1;
-                                                                    waitingCategory = -1;
-                                                                    waitingKeynumber = -1;
-                                                                }
-                                                                if (e.button == 2)
-                                                                {
-                                                                    a.keys[k] = new ActionKey(a.keys[k].inputType, "Mouse2");
-                                                                    waitingAction = -1;
-                                                                    waitingCategory = -1;
-                                                                    waitingKeynumber = -1;
-                                                                }
+
+                                                                a.keys[k] = new ActionKey(a.keys[k].inputType, "Mouse" + e.button);
+                                                                waitingAction = -1;
+                                                                waitingCategory = -1;
+                                                                waitingKeynumber = -1;
                                                             }
                                                             if (waitingAction < 0)
                                                             {
@@ -430,11 +436,45 @@ namespace QuickControlMenu
                                                     }
                                                     else if (a.keys[k].inputType == Action.InputType.Axis)
                                                     {
-                                                        a.keys[k] = new ActionKey(a.keys[k].inputType, GetAxisValue((Axis)EditorGUILayout.EnumPopup("Axis:", GetValueAxis(a.keys[k].key))));
+                                                        
+                                                        //a.keys[k] = new ActionKey(a.keys[k].inputType, GetAxisValue((Axis)EditorGUILayout.EnumPopup("Axis:", GetValueAxis(a.keys[k].key))));
+                                                        //TOMODIFYYY !!!
+
+                                                        AxisDevice device = (AxisDevice)EditorGUILayout.EnumPopup("Device:", GetValueAxisDevice(a.keys[k].key));
+
+                                                        //MouseAxis axisNum;
+                                                        int axisNum=0;
+                                                        if(device==AxisDevice.Mouse)
+                                                        {
+                                                            MouseAxis mouseAxis = (MouseAxis)EditorGUILayout.EnumPopup("Axis:", (MouseAxis)GetValueAxis(device,a.keys[k].key));
+                                                            axisNum = (int)mouseAxis;
+                                                            // a.keys[k] = new ActionKey(a.keys[k].inputType, GetAxisValue((Axis)EditorGUILayout.EnumPopup("Axis:", GetValueAxis(a.keys[k].key))));
+                                                            a.keys[k] = new ActionKey(a.keys[k].inputType, GetAxisString(device, axisNum));
+                                                        }
+                                                        else
+                                                        {
+                                                            JoystickAxis joystickAxis = (JoystickAxis)EditorGUILayout.EnumPopup("Axis:", (JoystickAxis)GetValueAxis(device, a.keys[k].key));
+                                                            axisNum = (int)joystickAxis;
+                                                            bool inverted= (a.keys[k].key!=null && a.keys[k].key.EndsWith("-"));
+                                                            inverted = EditorGUILayout.Toggle("Invert:",inverted);
+                                                            a.keys[k] = new ActionKey(a.keys[k].inputType, GetAxisString(device, axisNum,inverted));
+                                                            /*if (inverted)
+                                                            {
+                                                                a.keys[k] = new ActionKey(a.keys[k].inputType, GetAxisString(device, axisNum) +"-");
+                                                            }
+                                                            else
+                                                            {
+                                                                a.keys[k] = new ActionKey(a.keys[k].inputType, GetAxisString(device, axisNum));
+                                                            }*/
+                                                        }
                                                     }
                                                     else if (a.keys[k].inputType == Action.InputType.Button)
                                                     {
-                                                        a.keys[k] = new ActionKey(a.keys[k].inputType, GetButtonValue((JoystickButton)EditorGUILayout.EnumPopup("Button:", GetValueButton(a.keys[k].key))));
+                                                        ButtonDevice device = (ButtonDevice)EditorGUILayout.EnumPopup("Device:", GetValueButtonDevice(a.keys[k].key));
+                                                        JoystickButton button = (JoystickButton)EditorGUILayout.EnumPopup("Button:", GetValueButton(device, a.keys[k].key));
+
+                                                        a.keys[k] = new ActionKey(a.keys[k].inputType, GetButtonString(device, button));
+                                                        //a.keys[k] = new ActionKey(a.keys[k].inputType, GetButtonString((JoystickButton)EditorGUILayout.EnumPopup("Button:", GetValueButtonDevice(a.keys[k].key))));
                                                     }
 
                                                     GUILayout.Space(10f);
@@ -648,56 +688,180 @@ namespace QuickControlMenu
 
 
 
-        static string GetButtonValue(JoystickButton realButton)
+        static string GetButtonString(ButtonDevice device, JoystickButton button)
         {
-            int button = (int)realButton;
-            return "Joystick1Button" + button.ToString();
+            int buttonNum = (int)button;
+            int numDevice = (int)device;
+            if(numDevice >= 1)//Joystick 1 to 16
+            {
+                return "Joystick" + numDevice + "Button" + buttonNum;
+            }
+            return "JoystickButton" + buttonNum; //All joysticks
         }
-        static JoystickButton GetValueButton(string button)
+
+        static JoystickButton GetValueButton(ButtonDevice device, string button)
         {
             foreach (JoystickButton realButton in Enum.GetValues(typeof(JoystickButton)))
             {
-                if (GetButtonValue(realButton).Equals(button))
+                if (GetButtonString(device, realButton).Equals(button))
                 {
                     return realButton;
                 }
             }
-            return JoystickButton.Joystick1Button0;
+            return JoystickButton.Button0;
         }
-        static string GetAxisValue(Axis realAxis)
+
+        static string GetAxisString(AxisDevice device, int realAxis, bool inverted=false)
+        {
+            int deviceNum = (int)device;
+            int axis = realAxis + 1;
+            string sign = "";
+            if(inverted)
+            {
+                sign = "-";
+            }
+            if(deviceNum==0)//Mouse
+            {
+                //return GetAxisValue(realAxis);
+                if(axis==1)
+                {
+                    return "Mouse ScrollWheel Up";
+                }
+                else
+                {
+                    return "Mouse ScrollWheel Down";
+                }
+            }
+            else if(deviceNum==1)//All joysticks
+            {
+                if (axis == 1)
+                {
+                    return "Joystick Axis X" +sign;
+                }
+                if (axis == 2)
+                {
+                    return "Joystick Axis Y" + sign;
+                }
+                else
+                {
+                    return "Joystick Axis " + axis + sign;
+                }
+            }
+            else//Joystick 1 to 16
+            {
+                if(axis==1)
+                {
+                    return "Joystick " + (deviceNum-1) + " Axis X" + sign;
+                }
+                if(axis==2)
+                {
+                    return "Joystick " + (deviceNum -1) + " Axis Y" + sign;
+                }
+                else
+                {
+                    return "Joystick " + (deviceNum -1) + " Axis " + axis + sign;
+                }
+            }
+            
+        }
+
+        static string GetAxisString(int realAxis)
         {
             int axis = (int)realAxis + 1;
             if (axis == 1)
             {
-                return "Joystick 1 Axis X";
+                return "Mouse ScrollWheel Up";
             }
             if (axis == 2)
             {
-                return "Joystick 1 Axis Y";
-            }
-            if (axis == 29)
-            {
-                return "Mouse ScrollWheel Up";
-            }
-            if (axis == 30)
-            {
                 return "Mouse ScrollWheel Down";
             }
-            else
-            {
-                return "Joystick 1 Axis " + axis.ToString();
-            }
+
+            int joyAxis = axis - 2 % 28;
+            int numJoy = axis - 2 / 28  + 1;
+
+            return GetAxisString((AxisDevice)numJoy, joyAxis);
+
         }
-        static Axis GetValueAxis(string axis)
+        /*static Axis GetValueAxis(string axis)
         {
             foreach (Axis realAxis in Enum.GetValues(typeof(Axis)))
             {
-                if (GetAxisValue(realAxis).Equals(axis))
+                if (GetAxisString(realAxis).Equals(axis))
                 {
                     return realAxis;
                 }
             }
             return Axis.AxisXJoystick1;
+        }*/
+        static int GetValueAxis(AxisDevice device, string axis)
+        {
+            if(device==AxisDevice.Mouse)
+            {
+                foreach (MouseAxis realAxis in Enum.GetValues(typeof(MouseAxis)))
+                {
+                    if (GetAxisString(AxisDevice.Mouse, (int)realAxis).Equals(axis))
+                    {
+                        return (int)realAxis;
+                    }
+                }
+            }
+            else
+            {
+                foreach (JoystickAxis realAxis in Enum.GetValues(typeof(JoystickAxis)))
+                {
+                    if (GetAxisString(device, (int)realAxis).Equals(axis) || (GetAxisString(device, (int)realAxis) +"-").Equals(axis))
+                    {
+                        return (int)realAxis;
+                    }
+                }
+            }
+            
+            return 0;
+        }
+
+        static AxisDevice GetValueAxisDevice(string axis)
+        {
+            foreach (MouseAxis realAxis in Enum.GetValues(typeof(MouseAxis)))
+            {
+                if (GetAxisString(AxisDevice.Mouse, (int)realAxis).Equals(axis))
+                {
+                    return AxisDevice.Mouse;
+                }
+            }
+            foreach (AxisDevice device in Enum.GetValues(typeof(AxisDevice)))
+            {
+                if (device != AxisDevice.Mouse)
+                {
+                    foreach (JoystickAxis realAxis in Enum.GetValues(typeof(JoystickAxis)))
+                    {
+                        if (GetAxisString(device, (int)realAxis).Equals(axis) || (GetAxisString(device, (int)realAxis) +"-").Equals(axis))
+                        {
+                            return device;
+                        }
+                    }
+                }
+            }
+
+            return AxisDevice.Joystick1;
+        }
+        static ButtonDevice GetValueButtonDevice(string axis)
+        {
+            
+            foreach (ButtonDevice device in Enum.GetValues(typeof(ButtonDevice)))
+            {
+                
+                foreach (JoystickButton button in Enum.GetValues(typeof(JoystickButton)))
+                {
+                    if (GetButtonString(device, button).Equals(axis))
+                    {
+                        return device;
+                    }
+                }
+                
+            }
+
+            return ButtonDevice.Joystick1;
         }
 
         string GenerateKeyStrings()
@@ -750,6 +914,12 @@ namespace QuickControlMenu
 
         /*
          mettre le tout dans un dll or something
+         */
+
+        /*
+         Séparer les axes en Mouse/Joystick1/Joystick2...
+         Enum pour choisir le joystick/mouse
+         Choisir ensuite parmi les différents enum
          */
     }
 #endif

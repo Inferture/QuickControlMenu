@@ -44,7 +44,7 @@ namespace QuickControlMenu
                 textAction.alignment = TextAnchor.MiddleCenter;
 
                 textAction.text = action.keys[i].key;
-                act.transform.parent = transform.parent;
+                act.transform.SetParent(transform.parent);
                 act.transform.position = new Vector2(transform.position.x, transform.position.y - i * verticalSpace);
                 alternates.Add(act);
                 act.SetActive(true);
@@ -70,7 +70,7 @@ namespace QuickControlMenu
             textAction.alignment = TextAnchor.MiddleCenter;
 
             textAction.text = "<None>";
-            act.transform.parent = transform.parent;
+            act.transform.SetParent(transform.parent);
             act.transform.position = new Vector2(transform.position.x, transform.position.y - alternates.Count * verticalSpace);
             alternates.Add(act);
             act.SetActive(true);
@@ -128,11 +128,11 @@ namespace QuickControlMenu
             {
 
                 alternates[selectedNum].GetComponent<Text>().text = "(Enter key)";
-                if (!Controls.Select())
+                if (!Controls.SelectMenu())
                 {
                     endSelect = true;
                 }
-                if (!Controls.Select() || endSelect)
+                if (!Controls.SelectMenu() || endSelect)
                 {
 
                     foreach (KeyCode v in Enum.GetValues(typeof(KeyCode)))
@@ -147,12 +147,12 @@ namespace QuickControlMenu
                             if (selectedNum == alternates.Count - 1 && action.keys.Count <= selectedNum)
                             {
                                 action.AddKey(new ActionKey());
-
+                                if (alternates.Count < Controls.numAlternates)
+                                {
+                                    AddEmpty();
+                                }
                             }
-                            if (alternates.Count < Controls.numAlternates)
-                            {
-                                AddEmpty();
-                            }
+                            
                             Controls.LoadControls();
                             endSelect = false;
                         }
@@ -176,6 +176,7 @@ namespace QuickControlMenu
                         AddEmpty();
                     }
                     Controls.LoadControls();
+                    endSelect = false;
                 }
                 Informations.SetInfo(action.information);
             }

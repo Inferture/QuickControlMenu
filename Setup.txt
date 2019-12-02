@@ -1,9 +1,38 @@
+//en
 //Setup\\
-0)Extraire Custom Controls
+0)Extract QuickControlMenu
+1)Add InputManager.asset in the ProjetSettings folder
+2)Add QuickControlMenu in Assets (it should be named exactly "QuickControlMenu")
+3)Create a scene (ex: Intro) for the main menu
+4) Put the 3 prefabs from the Prefab folder in the scene
+5)Window -> QuickControlMenu -> Keymapping --> Add actions
+
+//Use\\
+6) 
+-You'll need to put "using QuickControlMenu;" to use it without typing QuickControlMenu. ... every time.
+-To check if an action was done now: Controls.GetActionDown(*action id*) 
+ex: Controls.GetActionDown("jump") or Controls.GetActionDown(KeyStrings.key_jump)
+Equivalent to Input.GetKeyDown(*key id*)
+-To check if an action is being done Controls.GetAction(*action id*) (equivalent to Input.GetKey(*key id) )
+-Check the value of an axis: Controls.GetAxisValue(*action id*) (0 if there is no axis associated with the action)
+-Check the value of an action (button or axis) Controls.GetActionAxisOrButtonValue(string id, float buttonActiveValue=1, float buttonInactiveValue=0);
+Returns the value of an axis corresponding to the action, or the button value if one corresponding to the action is pressed, or the  buttonInactiveValue
+
+
+7) To change the name of the scene to load when selecting Play in the menu, change the
+name of the scene in Menu/MainMenu/Play , Option Room component
+For exemple, you can change the scene attribute to "SampleScene"
+
+8)To change the selected color (color in the menu of the selected item), change the
+image in Sprites/selected.png
+
+//fr
+//Setup\\
+0)Extraire QuickControlMenu
 1)Ajouter InputManager.asset dans ProjectsSettings (remplacer l'ancien)
 2)Mettre Dossier QuickControlMenu dans Assets (bien veiller à ce qu'il s'appelle "QuickControlMenu")
 3)Créer une scène (ex: Intro) pour le menu principal
-4)Aller dans Prefab et glisser les 2 prefabs dans la scène
+4)Aller dans Prefab et glisser les 3 prefabs dans la scène
 5)Window -> QuickControlMenu -> Keymapping --> Ajouter des actions
 
 //Utiliser\\

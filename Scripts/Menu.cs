@@ -151,7 +151,7 @@ namespace QuickControlMenu
                         occupied = true;
                     }
                 }
-                if (Controls.LastMenu() && !occupied)
+                if (Controls.CancelMenu() && !occupied)
                 {
                     Sounds.Play("sound_menu_cancel");
                     if (parent != null)
@@ -160,7 +160,7 @@ namespace QuickControlMenu
                         parent.GetComponent<Menu>().Appear();
                     }
                 }
-                if (Controls.Select())
+                if (Controls.SelectMenu())
                 {
                     if (optionsObj[cursor].GetComponent<Option>().menu != null)
                     {
@@ -231,7 +231,7 @@ namespace QuickControlMenu
         {
             int next = (cur + 1) % options.Length;
             int changes = 1;
-            while (!options[next].enabled && changes < options.Length)
+            while (!options[next].isEnabled && changes < options.Length)
             {
                 next = (next + 1) % options.Length;
                 changes++;
@@ -243,7 +243,7 @@ namespace QuickControlMenu
         {
             int next = (cur + options.Length - 1) % options.Length;
             int changes = 1;
-            while (!options[next].enabled && changes < options.Length)
+            while (!options[next].isEnabled && changes < options.Length)
             {
                 next = (next + options.Length - 1) % options.Length;
                 changes++;

@@ -12,23 +12,6 @@ namespace QuickControlMenu
 
         public static int numAlternates = 4;
         public static float threshold;
-        public static string up;
-        public static string down;
-        public static string left;
-        public static string right;
-
-        public static string dash;
-        public static string magic;
-
-        public static string select;
-        public static string last;
-
-        public static string option1;
-        public static string option2;
-        public static string option3;
-        public static string option4;
-
-
         public const string PREFIXE_ACTION = "";//Préfixe des actions dans les PlayerPrefs
 
         public static List<Action> actions = new List<Action>();
@@ -51,12 +34,6 @@ namespace QuickControlMenu
             LoadControls();
         }
 
-
-        // Use this for initialization
-        private void Start()
-        {
-            LoadControls();
-        }
 
 
         public static void LoadControls()
@@ -98,104 +75,15 @@ namespace QuickControlMenu
             }
         }
 
+        /// <summary>
+        /// Not implemented yet.
+        /// </summary>
         public static void Default()
         {
-            PlayerPrefs.SetString("up", "UpArrow");
-            PlayerPrefs.SetString("down", "DownArrow");
-            PlayerPrefs.SetString("left", "LeftArrow");
-            PlayerPrefs.SetString("right", "RightArrow");
-
-            PlayerPrefs.SetString("magic", "W");
-            PlayerPrefs.SetString("dash", "Space");
-
-            PlayerPrefs.SetString("select", "Return");
-            PlayerPrefs.SetString("last", "Escape");
-
-            PlayerPrefs.SetString("option1", "Alpha1");
-            PlayerPrefs.SetString("option2", "Alpha2");
-            PlayerPrefs.SetString("option3", "Alpha3");
-            PlayerPrefs.SetString("option4", "Alpha4");
             LoadControls();
         }
 
-        public static float GetHDirection()
-        {
-            float vx = 0;
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                vx += 1;
-            }
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                vx -= 1;
-            }
-            return vx;
-        }
-
-        public static bool GetJump()
-        {
-            return Input.GetKey(KeyCode.Space);
-        }
-
-        public static Vector2 GetMovement()
-        {
-            float vx = 0;
-            float vy = 0;
-
-            vx = Mathf.Max(GetActionAxisOrButtonValue("right"), 0) - Mathf.Max(GetActionAxisOrButtonValue("left"), 0);
-            vy = Mathf.Max(GetActionAxisOrButtonValue("up"), 0) - Mathf.Max(GetActionAxisOrButtonValue("down"), 0);
-
-            Vector2 v = new Vector2(vx, vy);
-            if (v != Vector2.zero)
-            {
-                v = v.normalized;
-            }
-            return v;
-        }
-
-
-        public static bool GetDash()
-        {
-            return IsPressed(dash);
-        }
-        public static bool GetHit()
-        {
-            return Input.GetKeyDown(KeyCode.X);
-        }
-        public static bool GetShoot()
-        {
-            return IsPressed(magic);
-        }
-        public static bool GetSelect()
-        {
-            return IsPressedDown(select);
-        }
-        public static bool GetLast()
-        {
-            return IsPressedDown(last);
-        }
-
-        public static int GetOption()
-        {
-            if (GetAction("option1"))
-            {
-                return 1;
-            }
-            if (GetAction("option2"))
-            {
-                return 2;
-            }
-            if (GetAction("option3"))
-            {
-                return 3;
-            }
-            if (GetAction("option4"))
-            {
-                return 4;
-            }
-            return -1; //-1: pas encore choisi, 0: pas répondu au final
-        }
-
+        
         public static bool UpMenu()
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -283,9 +171,9 @@ namespace QuickControlMenu
             return false;
         }
 
-        public static bool Select()
+        public static bool SelectMenu()
         {
-            if (LastMenu())
+            if (CancelMenu())
             {
                 return false;
             }
@@ -308,7 +196,7 @@ namespace QuickControlMenu
             }
             return false;
         }
-        public static bool LastMenu()
+        public static bool CancelMenu()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -330,13 +218,71 @@ namespace QuickControlMenu
             return false;
         }
 
+
+        public static string GetAxisString(int axis)
+        {
+            int devAxis;
+            int numJoy;
+            if(axis<=0)
+            {
+                return null;
+            }
+            if (axis <= 2)
+            {
+                devAxis = axis;
+                numJoy = 0;//Mouse
+            }
+            else
+            {
+                devAxis = (axis - 3) % 28+1;
+                numJoy = (axis - 3) / 28 + 1;
+            }
+            if(axis>2+16*28)
+            {
+                return GetAxisString(axis - (16 * 28)) + "-";
+            }
+
+            return GetAxisString((AxisDevice)numJoy, devAxis);
+        }
+        static string GetAxisString(AxisDevice device, int realAxis)
+        {
+            int deviceNum = (int)device;
+            int axis = (int)realAxis + 0;
+            if (deviceNum == 0)//Mouse
+            {
+                //return GetAxisValue(realAxis);
+                if (axis == 1)
+                {
+                    return "Mouse ScrollWheel Up";
+                }
+                else
+                {
+                    return "Mouse ScrollWheel Down";
+                }
+            }
+            else//Joystick 1 to 16
+            {
+                if (axis == 1)
+                {
+                    return "Joystick " + deviceNum + " Axis X";
+                }
+                if (axis == 2)
+                {
+                    return "Joystick " + deviceNum + " Axis Y";
+                }
+                else
+                {
+                    return "Joystick " + deviceNum + " Axis " + axis;
+                }
+                //return GetAxisValue(2 + (deviceNum - 1) * 28 + realAxis);
+            }
+        }
         public static string GetAxis()
         {
-
             float m = 0;
             int axis = 0;
             float a;
-            for (int i = 1; i <= 30; i++)
+            for (int i = 1; i <= 2+28*16 * 2 ; i++)
             {
                 a = GetAxisValue(i);
                 if (a > m && a > threshold)
@@ -345,57 +291,13 @@ namespace QuickControlMenu
                     axis = i;
                 }
             }
-            if (axis == 0)
-            {
-                return null;
-            }
-            if (axis == 1)
-            {
-                return "Joystick 1 Axis X";
-            }
-            if (axis == 2)
-            {
-                return "Joystick 1 Axis Y";
-            }
-            if (axis == 29)
-            {
-                return "Mouse ScrollWheel Up";
-            }
-            if (axis == 30)
-            {
-                return "Mouse ScrollWheel Down";
-            }
-            else
-            {
-                return "Joystick 1 Axis " + axis.ToString();
-            }
-        }
+            return GetAxisString(axis);
 
-        static float GetAxisValue(int axis)
+        }
+        static float GetAxisValue(int realAxis)
         {
-            if (axis == 1)
-            {
-                return Input.GetAxis("Joystick 1 Axis X");
-            }
-            if (axis == 2)
-            {
-                return Input.GetAxis("Joystick 1 Axis Y");
-            }
-            if (axis == 29)
-            {
-                return Input.GetAxis("Mouse ScrollWheel Up");
-            }
-            if (axis == 30)
-            {
-                return Input.GetAxis("Mouse ScrollWheel Down");
-            }
-            else
-            {
-                return Input.GetAxis("Joystick 1 Axis " + axis.ToString());
-            }
-
+            return Input.GetAxis(GetAxisString(realAxis));
         }
-
 
 
         public static bool AxisAvailableActive(string s)
@@ -408,7 +310,7 @@ namespace QuickControlMenu
             {
                 return false;
             }
-            return Input.GetAxis(s) != 0;
+            return Input.GetAxis(s) > 0;
         }
         public static bool AxisAvailable(string s)
         {

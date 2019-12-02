@@ -113,7 +113,7 @@ namespace QuickControlMenu
                         occupied = true;
                     }
                 }
-                if (Controls.LastMenu() && !occupied)
+                if (Controls.CancelMenu() && !occupied)
                 {
                     Sounds.Play("sound_menu_cancel");
                     if (parent != null)
@@ -123,7 +123,7 @@ namespace QuickControlMenu
                     }
 
                 }
-                if (Controls.Select())
+                if (Controls.SelectMenu())
                 {
                     if (optionsObj[cursor].GetComponent<Option>().menu != null)
                     {
@@ -199,19 +199,19 @@ namespace QuickControlMenu
         {
             if (Controls.AxisAvailableActive(PlayerPrefs.GetString(axeX.GetComponent<OptionKey>().action)))
             {
-                axeXm.GetComponent<OptionKey>().enabled = false;
+                axeXm.GetComponent<OptionKey>().isEnabled = false;
             }
             else
             {
-                axeXm.GetComponent<OptionKey>().enabled = true;
+                axeXm.GetComponent<OptionKey>().isEnabled = true;
             }
             if (Controls.AxisAvailableActive(PlayerPrefs.GetString(axeY.GetComponent<OptionKey>().action)))
             {
-                axeYm.GetComponent<OptionKey>().enabled = false;
+                axeYm.GetComponent<OptionKey>().isEnabled = false;
             }
             else
             {
-                axeYm.GetComponent<OptionKey>().enabled = true;
+                axeYm.GetComponent<OptionKey>().isEnabled = true;
             }
 
         }

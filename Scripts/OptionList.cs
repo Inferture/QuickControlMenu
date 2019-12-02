@@ -28,7 +28,7 @@ namespace QuickControlMenu
         // Update is called once per frame
         void Update()
         {
-            if (enabled)
+            if (isEnabled)
             {
                 GetComponent<Text>().color = new Color(enabledColor.r, enabledColor.g, enabledColor.b, GetComponent<Text>().color.a);
             }
